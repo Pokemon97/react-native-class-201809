@@ -1,0 +1,14 @@
+{
+  "name": "training",
+  "version": "1.0.0",
+  "description": "training_lecture1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "123"
+  ],
+  "author": "bachnx",
+  "license": "ISC"
+}
