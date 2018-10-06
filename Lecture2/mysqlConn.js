@@ -9,7 +9,25 @@ class MySqlDB {
         this.dbname = 'transfer_money';
         this.db = this.open();
     }
-
+    //viet lai ham get connection theo promise
+    getConnection () {
+        return new Promise ((resolve,reject)=>{
+            let conn = mysql.createConnection({
+                host: this.host,
+                user: this.username,
+                password: this.password,
+                port: this.port,
+                database: this.dbname
+    
+            })
+            conn.connect(function (err) {
+                reject(err);
+              //  console.log("Connected!");
+            });
+            resolve(conn);
+        });
+        
+    }
     open() {
         let conn = mysql.createConnection({
             host: this.host,

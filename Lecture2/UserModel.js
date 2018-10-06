@@ -24,7 +24,7 @@ class UserModel extends MySqlDB {
             //console.log(err);
             //console.log(result);
             if (result.affectedRows == 1)
-                console.log('1 row insert');
+                console.log('1 row insert'); 
             else
                 console.log('Have error when inserting');
         });
