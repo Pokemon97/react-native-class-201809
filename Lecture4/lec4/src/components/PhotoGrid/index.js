@@ -17,7 +17,7 @@ export default class PhotGrid extends React.Component {
         this.screenWidth = Dimensions.get('window').width - 0; //offset
         this.photoWidth = (this.screenWidth / this.itemPerRow) - (this.ITEM_MARGIN * 2);
         this.state = {
-           // dataImg: [],
+            dataImg: [],
             count : 0,
         }
     }
@@ -30,7 +30,7 @@ export default class PhotGrid extends React.Component {
             let objImg = { id: i, src: link, choose: false };
             this.data.push(objImg);
         }
-       //  this.setState({ dataImg: this.data });
+         this.setState({ dataImg: this.data });
 
     }
     click = index  => {
@@ -40,7 +40,7 @@ export default class PhotGrid extends React.Component {
             sum ++;
         else
               sum --;
-        this.setState({count: sum });
+        this.setState({ dataImg: this.data,count: sum });
     }
     renderIcon(index) {
         if (index != undefined) {
@@ -58,7 +58,7 @@ export default class PhotGrid extends React.Component {
         }
     }
     renderItem(item) {
-        console.log('abc',item.item.choose);
+      //  console.log('abc',item.item.choose);
         let btn = item.item.choose ? this.renderIcon(item.item.id) : null;
         if(item.item.choose){
             console.log(123);
@@ -74,9 +74,6 @@ export default class PhotGrid extends React.Component {
         );
     }
     render() {
-       
-        let imgs = this.state.dataImg;
-        console.log('render again',imgs);
         return (
             <View style={styles.container}>
                 <View style={styles.header}>
@@ -87,7 +84,7 @@ export default class PhotGrid extends React.Component {
             <View style={styles.container}>
                 <FlatList
                 extraData={this.state.count}
-                    data={imgs}
+                    data={this.data}
                     renderItem={(item) => this.renderItem(item)}
                     numColumns={3}
                     keyExtractor={item => item.id}
