@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Image, TextInput, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Image, TextInput, Text, TouchableOpacity,KeyboardAvoidingView  } from "react-native";
 
 export default class Login extends React.Component {
 
@@ -13,28 +13,29 @@ export default class Login extends React.Component {
                     />
 
                 </View>
-                <View style={styles.formContainer}>
+                <View style={styles.formContainer} behavior='padding' enabled>
                     <Text style={styles.welcomTitle}>WELCOME</Text>
-                    <View style={styles.inputForm}>
-                        <TextInput style={styles.input}
-                            placeholder="Email"
-                            placeholderTextColor="#979899"
-                            underlineColorAndroid="transparent"
-                        />
-                        <TextInput style={styles.input}
-                            placeholder="Password"
-                            placeholderTextColor="#979899"
-                            secureTextEntry
-                            underlineColorAndroid="transparent"
-                        />
-                        <TouchableOpacity>
-                            <Text style={styles.buttonForgotPassword}>Forgot password?</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonContainer}
-                        >
-                            <Text style={styles.buttonText}>SIGN IN</Text>
-                        </TouchableOpacity>
-                    </View>
+
+                            <TextInput style={styles.input}
+                                placeholder="Email"
+                                placeholderTextColor="#979899"
+                                underlineColorAndroid="transparent"
+                            />
+                            <TextInput style={styles.input}
+                                placeholder="Password"
+                                placeholderTextColor="#979899"
+                                secureTextEntry
+                                underlineColorAndroid="transparent"
+                            />
+                            <TouchableOpacity>
+                                <Text style={styles.buttonForgotPassword}>Forgot password?</Text>
+                            </TouchableOpacity>
+                       
+                            <TouchableOpacity style={styles.buttonContainer}
+                            >
+                                <Text style={styles.buttonText}>SIGN IN</Text>
+                            </TouchableOpacity>
+                      
                 </View>
                 <View style={styles.footer}>
 
@@ -86,16 +87,24 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         marginTop: 10,
     },
+    infoForm:{
+        flex: 2
+    },
+    btnForm:{
+        flex: 1
+    },
     buttonForgotPassword: {
         color: "#5B5A5A",
         fontFamily: 'Roboto',
         fontSize: 10,
         marginTop: 5,
+        width:300,
         textAlign: 'right',
     },
     buttonContainer: {
-        marginTop: 40,
         height: 45,
+        width:300,
+        marginTop:30,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#129793',
@@ -109,11 +118,9 @@ const styles = StyleSheet.create({
         fontSize: 13
     },
     footer: {
-        flex: 2,
+        flex: 1,
         backgroundColor: "#F5F6F7",
-        paddingBottom: 10,
-        alignItems: 'center',
-        
+        alignItems: 'center',        
         justifyContent:'flex-end'
     },
     textForSignUp:{
