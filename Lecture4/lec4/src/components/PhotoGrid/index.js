@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import {
     Dimensions,
-    ListView,
-    TouchableHighlight,
     View,
     StyleSheet,
-    ViewPropTypes,
     FlatList,
     Image,
-    TouchableWithoutFeedback,
-    TouchableOpacity
+    TouchableOpacity,
+    Text
 } from 'react-native';
 export default class PhotGrid extends React.Component {
     constructor(props) {
@@ -20,7 +17,8 @@ export default class PhotGrid extends React.Component {
         this.screenWidth = Dimensions.get('window').width - 0; //offset
         this.photoWidth = (this.screenWidth / this.itemPerRow) - (this.ITEM_MARGIN * 2);
         this.state = {
-            dataImg: []
+           // dataImg: [],
+            count : 0,
         }
     }
     componentDidMount() {
@@ -30,40 +28,29 @@ export default class PhotGrid extends React.Component {
         for (let i = 0; i < 14; i++) {
             let link = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
             let objImg = { id: i, src: link, choose: false };
-            //  console.log(objImg);
             this.data.push(objImg);
         }
-        // this.setState({ dataImg: this.data });
+       //  this.setState({ dataImg: this.data });
 
     }
-    _toggleSelection(index) {
-        console.log('_toggleSelection', index);
+    click = index  => {
+        let sum = this.state.count;
         this.data[index].choose = !this.data[index].choose;
-        this.setState({ dataImg: this.data });
+        if(this.data[index].choose )
+            sum ++;
+        else
+              sum --;
+        this.setState({count: sum });
     }
-    _renderSelectionButton(index) {
-
+    renderIcon(index) {
         if (index != undefined) {
-            // console.log('index', index);
-            let icon = require('../../image/selected-off.png');
-            if (this.data[index].choose) {
-                icon = require('../../image/selected-on.png');
-            }
-
-            buttonImage = (
-
-                <Image
-                    style={styles.fullScreenSelectionIcon}
-                    source={icon}
-                />
-
-            );
+            icon = require('../../image/selected-on.png');
             return (
-                <TouchableWithoutFeedback  onPress={this._toggleSelection(index)} activeOpacity={1}>
-                   
-                        {buttonImage}
-                   
-                </TouchableWithoutFeedback>
+                   <View style={styles.fullScreenSelectionIcon}>
+                       <Image
+                    source={icon}
+                        />
+                    </View>
             );
         }
         else {
@@ -71,39 +58,41 @@ export default class PhotGrid extends React.Component {
         }
     }
     renderItem(item) {
-        // console.log('render', item.item);
-        let img = require('../../image/test_img.jpg');
-        let btn = this._renderSelectionButton(item.item.id);
-       // console.log(btn);
+        console.log('abc',item.item.choose);
+        let btn = item.item.choose ? this.renderIcon(item.item.id) : null;
+        if(item.item.choose){
+            console.log(123);
+        }
         return (
-            <View style={styles.item}>
-                 <Image
+            <TouchableOpacity onPress={()=>{this.click(item.item.id)}}>
+                <Image
                     style={{ width: this.photoWidth, height: this.photoWidth }}
                     source={{ uri: item.item.src }}
                 /> 
                 {btn}
-            </View>
+            </TouchableOpacity>
         );
     }
     render() {
+       
         let imgs = this.state.dataImg;
+        console.log('render again',imgs);
         return (
             <View style={styles.container}>
-                {/* <ListView
-            contentContainerStyle={styles.list}
-            // dataSource={dataSource}
-            initialListSize={21}
-            pageSize={3}
-            scrollRenderAheadDistance={500}
-            renderRow={this._renderRow}
-            removeClippedSubviews={false}
-        /> */}
+                <View style={styles.header}>
+                <Text>
+                    {this.state.count} photos selected 
+                </Text>
+            </View>
+            <View style={styles.container}>
                 <FlatList
-                    data={this.data}
+                extraData={this.state.count}
+                    data={imgs}
                     renderItem={(item) => this.renderItem(item)}
                     numColumns={3}
                     keyExtractor={item => item.id}
                 />
+            </View>
             </View>
         );
     }
@@ -113,6 +102,10 @@ export default class PhotGrid extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    header : {
+        backgroundColor:'yellow',
+        height:40,
     },
     list: {
         justifyContent: 'flex-start',
